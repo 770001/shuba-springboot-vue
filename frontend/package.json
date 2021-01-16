@@ -1,0 +1,39 @@
+{
+  "name": "frontend",
+  "version": "4.0.0",
+  "description": "A Vue.js & Spring Boot example project",
+  "author": "Jonas Hecht <jonas.hecht@codecentric.de>",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf node_modules target",
+    "serve": "vue-cli-service serve",
+    "test:unit": "vue-cli-service test:unit --coverage",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test": "vue-cli-service test:unit && vue-cli-service test:e2e",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "0.21.1",
+    "bootstrap": "4.5.3",
+    "bootstrap-vue": "2.21.2",
+    "jquery": "3.5.1",
+    "core-js": "3.8.2",
+    "vue": "2.6.12",
+    "vue-router": "3.4.9",
+    "vuex": "3.6.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "4.5.10",
+    "@vue/cli-plugin-e2e-nightwatch": "4.5.10",
+    "@vue/cli-plugin-router": "4.5.10",
+    "@vue/cli-plugin-unit-jest": "4.5.10",
+    "@vue/cli-plugin-vuex": "4.5.10",
+    "@vue/cli-service": "4.5.10",
+    "@vue/test-utils": "1.1.2",
+    "chromedriver": "87.0.5",
+    "geckodriver": "1.21.1",
+    "node-sass": "5.0.0",
+    "sass-loader": "10.1.1",
+    "vue-template-compiler": "2.6.12"
+  }
+}
