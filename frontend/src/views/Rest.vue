@@ -6,7 +6,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Ping from '@/components/Ping.vue'
 
 export default {
