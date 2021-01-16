@@ -7,7 +7,7 @@ const AXIOS = axios.create({
 
 
 export default {
-  ping() {
+  getPing() {
     return AXIOS.get(`/ping`);
   }
 }

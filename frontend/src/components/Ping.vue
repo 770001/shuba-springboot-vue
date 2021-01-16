@@ -1,6 +1,6 @@
 <template>
   <button class=”Search__button” @click="callRestService()">CALL Spring Boot REST backend service</button>
-  <h3>{{ response }}</h3>
+  <h3>{{ backendResponse }}</h3>
 </template>
 
 <script>
@@ -9,16 +9,16 @@ import api from './backend-api';
 export default {
   data() {
     return {
-      response: [],
+      backendResponse: [],
       errors: []
     }
   },
   methods: {
     callRestService() {
-      api.ping(`api/ping`)
+      api.getPing()
         .then(response => {
           // JSON responses are automatically parsed.
-          this.response = response.data
+          this.backendResponse = response.data
         })
         .catch(e => {
           this.errors.push(e)
