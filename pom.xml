@@ -2,124 +2,66 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.khilkevichigor</groupId>
+	<artifactId>shuba-springboot-vue</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>shuba-springboot-vue</name>
+	<description>Demo project for Spring Boot</description>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.khilkevichigor</groupId>
-	<artifactId>shuba-springboot-vue</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>shuba-springboot-vue</name>
-	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
-		<frontend-src-dir>${project.basedir}/src/main/frontend</frontend-src-dir>
-		<node.version>v15.5.1</node.version>
-		<npm.version>7.3.0</npm.version>
-		<frontend-maven-plugin.version>1.11.0</frontend-maven-plugin.version>
+		<main.basedir>${project.basedir}</main.basedir>
+
+		<!-- Analysis Tools for CI -->
+		<build-plugin.jacoco.version>0.8.6</build-plugin.jacoco.version>
+		<build-plugin.coveralls.version>4.3.0</build-plugin.coveralls.version>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+	<modules>
+		<module>frontend</module>
+		<module>backend</module>
+	</modules>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-<!--	<build>-->
-<!--		<plugins>-->
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--			</plugin>-->
-<!--		</plugins>-->
-<!--	</build>-->
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${build-plugin.jacoco.version}</version>
 				<executions>
+					<!-- Prepares the property pointing to the JaCoCo
+                    runtime agent which is passed as VM argument when Maven the Surefire plugin
+                    is executed. -->
 					<execution>
-						<id>copy Vue.js frontend content</id>
-						<phase>generate-resources</phase>
+						<id>pre-unit-test</id>
 						<goals>
-							<goal>copy-resources</goal>
+							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<outputDirectory>src/main/resources/public</outputDirectory>
-							<overwrite>true</overwrite>
-							<resources>
-								<resource>
-									<directory>${project.parent.basedir}/frontend/target/dist</directory>
-									<includes>
-										<include>static/</include>
-										<include>index.html</include>
-										<include>favicon.ico</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
+					</execution>
+					<!-- Ensures that the code coverage report for
+                    unit tests is created after unit tests have been run. -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${frontend-maven-plugin.version}</version>
-				<executions>
-					<!-- Install our node and npm version to run npm/node scripts-->
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<configuration>
-<!--							<nodeVersion>v10.10.0</nodeVersion>-->
-							<nodeVersion>${node.version}</nodeVersion>
-						</configuration>
-					</execution>
-					<!-- Install all project dependencies -->
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<!-- optional: default phase is "generate-resources" -->
-						<phase>generate-resources</phase>
-						<!-- Optional configuration which provides for running any npm command -->
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-					<!-- Build and minify static files -->
-					<execution>
-						<id>npm run build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-				</executions>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>${build-plugin.coveralls.version}</version>
 			</plugin>
 		</plugins>
 	</build>
