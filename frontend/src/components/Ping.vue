@@ -7,6 +7,7 @@
 import api from './backend-api';
 
 export default {
+  name: 'Ping',
   data() {
     return {
       backendResponse: [],
