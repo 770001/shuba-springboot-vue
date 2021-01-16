@@ -1,21 +1,23 @@
 <template>
-  <button class=”Search__button” @click="callRestService()">CALL Spring Boot REST backend service</button>
-  <h3>{{ backendResponse }}</h3>
+  <div class="ping">
+    <button class=”Search__button” @click="callRestService()">CALL Spring Boot REST backend service</button>
+    <h3>{{ backendResponse }}</h3>
+  </div>
 </template>
 
 <script>
-import api from './backend-api';
+import api from './backend-api'
 
 export default {
   name: 'Ping',
-  data() {
+  data () {
     return {
       backendResponse: [],
       errors: []
     }
   },
   methods: {
-    callRestService() {
+    callRestService () {
       api.getPing()
         .then(response => {
           // JSON responses are automatically parsed.
