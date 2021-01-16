@@ -1,35 +1,51 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Router from 'vue-router'
+import Hello from '@/components/Hello'
+import Service from '@/components/Service'
+import Bootstrap from '@/components/Bootstrap'
+import User from '@/components/User'
+import Login from '@/components/Login'
+import Protected from '@/components/Protected'
 
-Vue.use(VueRouter)
+import store from './store'
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/rest',
-    name: 'Rest',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Rest.vue')
+Vue.use(Router);
+
+const router = new Router({
+  mode: 'history', // uris without hashes #, see https://router.vuejs.org/guide/essentials/history-mode.html#html5-history-mode
+  routes: [
+    { path: '/', component: Hello },
+    { path: '/callservice', component: Service },
+    { path: '/bootstrap', component: Bootstrap },
+    { path: '/user', component: User },
+    { path: '/login', component: Login },
+    {
+      path: '/protected',
+      component: Protected,
+      meta: {
+        requiresAuth: true
+      }
+    },
+
+    // otherwise redirect to home
+    { path: '*', redirect: '/' }
+  ]
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!store.getters.isLoggedIn) {
+      next({
+        path: '/login'
+      })
+    } else {
+      next();
+    }
+  } else {
+    next(); // make sure to always call next()!
   }
-]
+});
 
-const router = new VueRouter({
-  routes
-})
-
-export default router
+export default router;

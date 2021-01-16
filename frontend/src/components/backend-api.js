@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 
 const AXIOS = axios.create({
@@ -7,7 +8,20 @@ const AXIOS = axios.create({
 
 
 export default {
-  getPing() {
+  hello() {
     return AXIOS.get(`/ping`);
+  },
+  getUser(userId) {
+    return AXIOS.get(`/user/` + userId);
+  },
+  createUser(firstName, lastName) {
+    return AXIOS.post(`/user/` + firstName + '/' + lastName);
+  },
+  getSecured(user, password) {
+    return AXIOS.get(`/secured/`,{
+      auth: {
+        username: user,
+        password: password
+      }});
   }
 }
