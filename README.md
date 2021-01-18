@@ -1,12 +1,12 @@
 # shuba-springboot-vue CRM for buyer
 
-## [shuba.herokuapp.com](https://shuba.herokuapp.com)
+## Доступно на [shuba.herokuapp.com](https://shuba.herokuapp.com)
 
-## Собрано по туториалу [https://github.com/jonashackt/spring-boot-vuejs](https://github.com/jonashackt/spring-boot-vuejs)
+## Собрано по туториалу [https://github.com/jonashackt/spring-boot-vuejs](https://github.com/jonashackt/spring-boot-vuejs) - обязательно к прочтению!
 
-### Шаги
+## Шаги для сборки с нуля
 
-1) Структура 
+### 1) Структура 
    
 Общая структура проекта: модуль frontend, модуль backend. В корне проекта и в модулях - по pom.xml
 
@@ -24,7 +24,7 @@ shuba-springboot-vue
 └── pom.xml     → parent pom.xml - управляет модулями
 ```
 
-2) Backend
+### 2) Backend
 
 Генерим проект на [Spring Initializr](https://start.spring.io/)
 
@@ -175,7 +175,7 @@ shuba-springboot-vue
 </project>
 ```
 
-3) Frontend
+### 3) Frontend
 
 На Windows: 
 
@@ -281,6 +281,13 @@ shuba-springboot-vue
 </project>
 ```
 
+### 4) Собираем проект
+
+В корне выполняем `mvn clean install`, фронт и бэк упакуются в один jar в директории backend/target
+
+После успешной сборки запускаем jar выполнив `mvn --projects backend spring-boot:run`
+
+После запуска приложения идем на localhost:8080.
 
 
 
