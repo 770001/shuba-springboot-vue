@@ -10,9 +10,16 @@
 
 ## Собрано по туториалу [https://github.com/jonashackt/spring-boot-vuejs](https://github.com/jonashackt/spring-boot-vuejs) - обязательно к прочтению!
 
-## Шаги для сборки с нуля
+> Цель проекта - помощь байеру в планировании поездок, закупок, доставки, ведение статистики по заказам, клиентам, 
+> расчете доходов и расходов и пр. В дальнейшем возможно подключение Telegram-бота
 
-### 1) Структура 
+## Оглавление:
+* [Структура](#Структура)
+* [Backend](#Backend)
+* [Frontend](#Frontend)
+* [Собираем проект](#Собираем-проект)
+
+### Структура 
    
 Общая структура проекта: модуль frontend, модуль backend. В корне проекта и в модулях - по pom.xml
 
@@ -30,9 +37,9 @@ shuba-springboot-vue
 └── pom.xml     → parent pom.xml - управляет модулями
 ```
 
-### 2) Backend
+### Backend
 
-Генерим проект на [Spring Initializr](https://start.spring.io/)
+Генерим проект на [Spring Initializr](https://start.spring.io/) (зависимости см. в основном туториале)
 
 Шароим на гитхаб - создаем репозиторий.
 
@@ -181,7 +188,7 @@ shuba-springboot-vue
 </project>
 ```
 
-### 3) Frontend
+### Frontend
 
 На Windows: 
 
@@ -193,7 +200,9 @@ shuba-springboot-vue
 
 Как установить CLI (что выбрать при установке) - см. основной туториал.
 
-Будет создана директорию frontend и сгенерится проект на Vuejs
+Будет создана директорию frontend и сгенерится проект на VueJs
+
+Нужно будет настроить проксирование запросов от фронта на бэк с помощью Axios (см. основной туториал)
 
 Мой pom.xml:
 
@@ -287,9 +296,9 @@ shuba-springboot-vue
 </project>
 ```
 
-### 4) Собираем проект
+### Собираем проект
 
-В корне выполняем `mvn clean install`, фронт и бэк упакуются в один jar в директории backend/target
+В корне проекта выполняем `mvn clean install`, фронт VueJs и бэк SpringBoot упакуются в один jar в директории backend/target
 
 После успешной сборки запускаем jar выполнив `mvn --projects backend spring-boot:run`
 
