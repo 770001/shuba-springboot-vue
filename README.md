@@ -10,9 +10,17 @@
 
 ## Собрано по туториалу [https://github.com/jonashackt/spring-boot-vuejs](https://github.com/jonashackt/spring-boot-vuejs) - обязательно к прочтению!
 
+
+
 ## Шаги для сборки с нуля
 
-### 1) Структура 
+## Оглавление:
+* [Структура](#Структура)
+* [Backend](#Backend)
+* [Frontend](#Frontend)
+* [Собираем проект](#Собираем-проект)
+
+### Структура 
    
 Общая структура проекта: модуль frontend, модуль backend. В корне проекта и в модулях - по pom.xml
 
@@ -30,7 +38,7 @@ shuba-springboot-vue
 └── pom.xml     → parent pom.xml - управляет модулями
 ```
 
-### 2) Backend
+### Backend
 
 Генерим проект на [Spring Initializr](https://start.spring.io/)
 
@@ -181,7 +189,7 @@ shuba-springboot-vue
 </project>
 ```
 
-### 3) Frontend
+### Frontend
 
 На Windows: 
 
@@ -287,7 +295,7 @@ shuba-springboot-vue
 </project>
 ```
 
-### 4) Собираем проект
+### Собираем проект
 
 В корне выполняем `mvn clean install`, фронт и бэк упакуются в один jar в директории backend/target
 
