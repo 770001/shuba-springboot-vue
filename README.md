@@ -16,9 +16,11 @@
 
 ## Оглавление:
 * [Структура](#Структура)
+* [Docker](#Docker)
 * [Backend](#Backend)
 * [Frontend](#Frontend)
 * [Собираем проект](#Собираем-проект)
+* [Деплой](#Деплой)
 
 ### Структура 
    
@@ -37,6 +39,34 @@ shuba-springboot-vue
 │
 └── pom.xml     → parent pom.xml - управляет модулями
 ```
+
+### Docker
+
+Для подключения базы данных будем юзать Docker.
+
+Скачиваем Docker Quick Terminal (ссылка на гитхаб)
+
+Создаем `docker-compose.yml`
+```yaml
+version: '2'
+services:
+  postgres-buyer:
+    image: postgres:11.5
+    environment:
+      - POSTGRES_USER=buyer
+      - POSTGRES_PASSWORD=buyer
+      - POSTGRES_DB=buyer
+    ports:
+      - 5432:5432
+```
+
+Создаем `down_up.bat`
+```
+docker-compose down
+docker-compose up -d
+```
+
+Запускаем Docker Quick Terminal, запускаем `down_up.bat`
 
 ### Backend
 
@@ -189,6 +219,23 @@ shuba-springboot-vue
 </project>
 ```
 
+Для подключения БД как локальной так и heroku - прописываем datasources в `application.properties`:
+
+```properties
+#port for backend
+server.port=${PORT:8080}
+# datasources for local db and heroku
+spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/buyer}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME:buyer}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD :buyer}
+# for init db by admin
+spring.datasource.initialization-mode=always
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.platform=postgres
+```
+
+В IDE подключаем БД c datasource из `docker-compose.yml`
+
 ### Frontend
 
 На Windows: 
@@ -305,5 +352,14 @@ shuba-springboot-vue
 
 После запуска приложения идем на localhost:8080.
 
+### Деплой
+Деплоить приложение будем на [heroku.com](https://heroku.com)
 
+Создаем новый проект, даем название и выбираем сервер например Europe
+
+В Resources добавляем базу Heroku Postgres с бесплатным тарифом
+
+В Deploy выбираем github -> репозиторий -> ветку с которой будем разворачивать приложение
+
+Жмем деплой.
 
