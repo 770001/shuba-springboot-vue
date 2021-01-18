@@ -1,5 +1,8 @@
 # shuba-springboot-vue CRM for buyer
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/770001/shuba-springboot-vue)
+[![Deployed on Heroku](https://img.shields.io/badge/heroku-deployed-blueviolet.svg?logo=heroku)](https://shuba.herokuapp.com/)
+
 ## Доступно на [shuba.herokuapp.com](https://shuba.herokuapp.com)
 
 ## Собрано по туториалу [https://github.com/jonashackt/spring-boot-vuejs](https://github.com/jonashackt/spring-boot-vuejs) - обязательно к прочтению!
