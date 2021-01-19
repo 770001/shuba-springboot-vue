@@ -24,7 +24,7 @@
 
 ### Структура 
    
-Общая структура проекта: модуль frontend, модуль backend. В корне проекта и в модулях - по pom.xml
+Общая структура проекта: модуль `frontend`, модуль `backend`. В корне проекта и в модулях - по `pom.xml`
 
 ```text
 shuba-springboot-vue
@@ -42,9 +42,9 @@ shuba-springboot-vue
 
 ### Docker
 
-Для подключения базы данных будем юзать Docker.
+Для подключения базы данных будем юзать `Docker Compose`.
 
-Скачиваем Docker Quick Terminal (ссылка на гитхаб)
+Скачиваем [Docker QuickTerminal](https://github.com/docker/toolbox/releases/)
 
 Создаем `docker-compose.yml`
 ```yaml
@@ -53,9 +53,9 @@ services:
   postgres-buyer:
     image: postgres:11.5
     environment:
-      - POSTGRES_USER=buyer
-      - POSTGRES_PASSWORD=buyer
-      - POSTGRES_DB=buyer
+      - POSTGRES_USER=your_user
+      - POSTGRES_PASSWORD=your_password
+      - POSTGRES_DB=your_database_name
     ports:
       - 5432:5432
 ```
@@ -66,17 +66,17 @@ docker-compose down
 docker-compose up -d
 ```
 
-Запускаем Docker Quick Terminal, запускаем `down_up.bat`
+Запускаем `Docker QuickTerminal`, запускаем `down_up.bat`
 
 ### Backend
 
 Генерим проект на [Spring Initializr](https://start.spring.io/) (зависимости см. в основном туториале)
 
-Шароим на гитхаб - создаем репозиторий.
+Шарим на `github.com` - создаем репозиторий.
 
-Создаем директорию backend и переносим туда директорию src
+Создаем директорию `backend` и переносим туда директорию `src`
 
-Мой pom.xml:
+Мой `pom.xml` для модуля `backend`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -219,7 +219,7 @@ docker-compose up -d
 </project>
 ```
 
-Для подключения БД как локальной так и heroku - прописываем datasources в `application.properties`:
+Для подключения БД как локальной так и `HerokuPostgres` - прописываем datasource в `application.properties`:
 
 ```properties
 #port for backend
@@ -235,24 +235,25 @@ spring.datasource.platform=postgres
 ```
 
 В IDE подключаем БД c datasource из `docker-compose.yml`
+![](.README_images/add_database.png)
 
 ### Frontend
 
 На Windows: 
 
-Ставим [chocolatey](https://chocolatey.org/)
+Ставим [Chocolatey](https://chocolatey.org/)
 
 Выполняем `choco install npm`, затем `npm install -g @vue/cli` (по-моему через PowerShell)
 
 Идем в корень проекта и выполняем `vue create frontend --no-git`
 
-Как установить CLI (что выбрать при установке) - см. основной туториал.
+Как установить CLI (что выбрать при установке) - см. основной [туториал](https://github.com/jonashackt/spring-boot-vuejs).
 
-Будет создана директорию frontend и сгенерится проект на VueJs
+Будет создана директорию `frontend` и сгенерится проект на `VueJs`
 
-Нужно будет настроить проксирование запросов от фронта на бэк с помощью Axios (см. основной туториал)
+Нужно будет настроить проксирование запросов от фронта на бэк с помощью `Axios` (см. основной [туториал](https://github.com/jonashackt/spring-boot-vuejs))
 
-Мой pom.xml:
+Мой pom.xml для модуля `frontend`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -346,20 +347,22 @@ spring.datasource.platform=postgres
 
 ### Собираем проект
 
-В корне проекта выполняем `mvn clean install`, фронт VueJs и бэк SpringBoot упакуются в один jar в директории backend/target
+В корне проекта выполняем `mvn clean install`, фронт на `VueJs` и бэк на `SpringBoot` упакуются в один jar в директории `backend/target`
 
 После успешной сборки запускаем jar выполнив `mvn --projects backend spring-boot:run`
 
-После запуска приложения идем на localhost:8080.
+После запуска приложения идем на [localhost:8080](http://localhost:8080).
 
 ### Деплой
 Деплоить приложение будем на [heroku.com](https://heroku.com)
 
-Создаем новый проект, даем название и выбираем сервер например Europe
+Создаем новый проект, даем название и выбираем сервер например `Europe`
 
-В Resources добавляем базу Heroku Postgres с бесплатным тарифом
+В `Resources` добавляем базу `HerokuPostgres` с бесплатным тарифом
 
-В Deploy выбираем github -> репозиторий -> ветку с которой будем разворачивать приложение
+В `Deploy` выбираем `github.com` -> репозиторий -> ветку с которой будем разворачивать приложение
 
 Жмем деплой.
+
+Финиш!
 
