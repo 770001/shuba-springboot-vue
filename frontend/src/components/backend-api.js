@@ -8,5 +8,12 @@ const AXIOS = axios.create({
 export default {
   getPing () {
     return AXIOS.get('/ping')
+  },
+  getSecured (user, password) {
+    return AXIOS.get(`/secured/`,{
+      auth: {
+        username: user,
+        password: password
+      }});
   }
 }
