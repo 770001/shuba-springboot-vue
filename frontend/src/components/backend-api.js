@@ -9,11 +9,18 @@ export default {
   getPing () {
     return AXIOS.get('/ping')
   },
-  getSecured (user, password) {
-    return AXIOS.get(`/secured/`,{
+  getUser (userId) {
+    return AXIOS.get('/user/' + userId)
+  },
+  createUser (username, password) {
+    return AXIOS.post('/user/' + username + '/' + password)
+  },
+  getSecured (username, password) {
+    return AXIOS.get('/secured/', {
       auth: {
-        username: user,
+        username: username,
         password: password
-      }});
+      }
+    })
   }
 }

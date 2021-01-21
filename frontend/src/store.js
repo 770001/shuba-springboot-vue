@@ -25,22 +25,22 @@ export default new Vuex.Store({
     actions: {
         login({commit}, {user, password}) {
             return new Promise((resolve, reject) => {
-                console.log("Accessing backend with user: '" + user);
+                console.log("Accessing backend with user: '" + user)
                 api.getSecured(user, password)
                     .then(response => {
-                        console.log("Response: '" + response.data + "' with Statuscode " + response.status);
+                        console.log("Response: '" + response.data + "' with Statuscode " + response.status)
                         if(response.status === 200) {
-                            console.log("Login successful");
+                            console.log("Login successful")
                             // place the loginSuccess state into our vuex store
                             commit('login_success', {
                                 userName: user,
                                 userPass: password
-                            });
+                            })
                         }
                         resolve(response)
                     })
                     .catch(error => {
-                        console.log("Error: " + error);
+                        console.log("Error: " + error)
                         // place the loginError state into our vuex store
                         commit('login_error', {
                             userName: user

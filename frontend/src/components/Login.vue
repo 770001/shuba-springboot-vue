@@ -32,14 +32,14 @@ export default {
   },
   methods: {
     callLogin () {
-      this.errors = [];
-      this.$store.dispatch("login", { user: this.user, password: this.password})
+      this.errors = []
+      this.$store.dispatch('login', { user: this.user, password: this.password })
         .then(() => {
           this.$router.push('/Protected')
         })
         .catch(error => {
-          this.loginError = true;
-          this.errors.push(error);
+          this.loginError = true
+          this.errors.push(error)
           this.error = true
         })
     }

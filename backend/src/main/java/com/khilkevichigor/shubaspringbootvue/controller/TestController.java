@@ -12,7 +12,7 @@ public class TestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/api/ping")
+    @GetMapping("/api/ping2")
     public String ping() {
         User user = userService.findUserByUsername("admin");
         return user.getUsername() + " is pong";

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Ping from '@/components/Ping.vue'
+import Ping from '@/components/Service.vue'
 
 export default {
   name: 'Rest',
