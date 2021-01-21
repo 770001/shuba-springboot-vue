@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       loginError: false,
-      user: '',
+      username: '',
       password: '',
       error: false,
       errors: []
@@ -33,7 +33,7 @@ export default {
   methods: {
     callLogin () {
       this.errors = []
-      this.$store.dispatch('login', { user: this.user, password: this.password })
+      this.$store.dispatch('login', { user: this.username, password: this.password })
         .then(() => {
           this.$router.push('/Protected')
         })
