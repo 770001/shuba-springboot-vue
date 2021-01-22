@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,42 +35,59 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //редирект с учетом роли после логина
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new MySimpleUrlAuthenticationSuccessHandler();
-    }
+//    @Bean
+//    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+//        return new MySimpleUrlAuthenticationSuccessHandler();
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/home-sss").access("hasRole('USER') or hasRole('ADMIN')")
+    //    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+//                .antMatchers("/home").access("hasRole('USER') or hasRole('ADMIN')")
 //                .antMatchers("/user/**").access("hasRole('USER')")
 //                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+//
+//                .anyRequest().anonymous() //для того чтобы /login не был доступен для авторизованных пользователей
+//                .and()
+//                .formLogin()
+//                .loginPage("/login") //страница логин недоступна авторизованным пользователям (пришлось закоментировать что б работало)
+//                .successHandler(myAuthenticationSuccessHandler()) //стратегия перенаправления после /login
+//                .failureUrl("/login?error=true")
+//                .and()
+//                .logout()
+//                .logoutUrl("/perform_logout")
+//                .logoutSuccessUrl("/login")
+//                .invalidateHttpSession(true)
+//                .and()
+//                //перенаправляем не на /403 а на домашнюю
+//                .exceptionHandling().accessDeniedPage("/home") //обработка ошибок (400)
+//                .and()
+//                .csrf()
+//                .disable()
+//        ;
+//    }
 
-                .anyRequest().anonymous() //для того чтобы /login не был доступен для авторизованных пользователей
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // No session will be created or used by spring security
                 .and()
-                .formLogin()
-                .loginPage("/login") //страница логин недоступна авторизованным пользователям (пришлось закоментировать что б работало)
-                .successHandler(myAuthenticationSuccessHandler()) //стратегия перенаправления после /login
-                .failureUrl("/login?error=true")
+                .httpBasic()
                 .and()
-                .logout()
-                .logoutUrl("/perform_logout")
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)
+                .authorizeRequests()
+                .antMatchers("/api/hello").permitAll()
+                .antMatchers("/api/user/**").permitAll() // allow every URI, that begins with '/api/user/'
+                .antMatchers("/api/secured").authenticated()
+                //.anyRequest().authenticated() // protect all other requests
                 .and()
-                //перенаправляем не на /403 а на домашнюю
-                .exceptionHandling().accessDeniedPage("/home") //обработка ошибок (400)
-                .and()
-                .csrf()
-                .disable()
-        ;
+                .csrf().disable(); // disable cross site request forgery, as we don't use cookies - otherwise ALL PUT, POST, DELETE will get HTTP 403!
     }
 }
 
