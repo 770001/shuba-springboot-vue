@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     callHelloApi () {
-      api.hello().then(response => {
+      api.getPing().then(response => {
         this.backendResponse = response.data
         this.httpStatusCode = response.status
         this.httpStatusText = response.statusText
