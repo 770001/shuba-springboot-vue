@@ -1,22 +1,22 @@
 <template>
   <div class="protected">
     <h1>
-      <b-badge variant="success">YEAH you made it!</b-badge>
+      <b-badge variant="success">ДА, вы сделали это!</b-badge>
     </h1>
-    <h5>If you're able to read this, you've successfully logged in and redirected to this protected site :)</h5>
+    <h5>Если вы можете это прочитать, вы успешно вошли в систему и перешли на этот защищенный сайт :)</h5>
 
-    <b-btn variant="primary" @click="getSecuredTextFromBackend()">Call the secured API</b-btn>
+    <b-btn variant="primary" @click="getSecuredTextFromBackend()">Вызов защищенного API</b-btn>
     <p></p>
 
     <div v-if="securedApiCallSuccess">
-      <b-badge variant="success">API call</b-badge>
-      Full response: {{ backendResponse }}
-      <b-badge variant="success">successful</b-badge>
+      <b-badge variant="success">Вызов API</b-badge>
+      Полный ответ: {{ backendResponse }}
+      <b-badge variant="success">успешный</b-badge>
     </div>
     <div v-if="errors">
-      <b-badge variant="warning">API call</b-badge>
+      <b-badge variant="warning">Вызов API</b-badge>
       {{ errors }}
-      <b-badge variant="warning">NOT successful</b-badge>
+      <b-badge variant="warning">Не успешный</b-badge>
     </div>
   </div>
 

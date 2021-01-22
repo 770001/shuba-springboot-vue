@@ -1,19 +1,19 @@
 <template>
   <div class="user">
-    <h1>Create User</h1>
+    <h1>Создать пользователя</h1>
 
-    <h3>Just some database interaction...</h3>
+    <h3>Просто какое-то взаимодействие с базой данных ...</h3>
 
     <input type="text" v-model="user.username" placeholder="username">
     <input type="text" v-model="user.password" placeholder="password">
 
-    <button @click="createNewUser()">Create User</button>
+    <button @click="createNewUser()">Создать пользователя</button>
 
-    <div v-if="showResponse"><h6>User created with Id: {{ response }}</h6></div>
+    <div v-if="showResponse"><h6>Пользователь создан с id: {{ response }}</h6></div>
 
-    <button v-if="showResponse" @click="retrieveUser()">Retrieve user {{ user.id }} data from database</button>
+    <button v-if="showResponse" @click="retrieveUser()">Получить пользователя под id: {{ user.id }} - данные из базы</button>
 
-    <h4 v-if="showRetrievedUser">Retrieved User {{ retrievedUser.username }} {{ retrievedUser.password }}</h4>
+    <h4 v-if="showRetrievedUser">Полученный пользователь: {{ retrievedUser.username }} {{ retrievedUser.password }}</h4>
 
   </div>
 </template>

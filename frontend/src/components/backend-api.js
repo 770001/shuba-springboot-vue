@@ -7,7 +7,7 @@ const AXIOS = axios.create({
 
 export default {
   getPing () {
-    return AXIOS.get('/ping')
+    return AXIOS.get('/hello')
   },
   getUser (userId) {
     return AXIOS.get('/user/' + userId)

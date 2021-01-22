@@ -21,16 +21,17 @@ public class BackendController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BackendController.class);
 
-    public static final String HELLO_TEXT = "Hello from Spring Boot Backend!";
-    public static final String SECURED_TEXT = "Hello from the secured resource!";
+    public static final String HELLO_TEXT = "Привет из SpringBoot-а!";
+    public static final String SECURED_TEXT = "Привет с защищенного ресурса!";
 
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(path = "/ping")
+    @RequestMapping(path = "/hello")
     public String sayHello() {
         LOG.info("GET called on /hello resource");
-        return HELLO_TEXT;
+        User user = userRepository.findUserByUsername("admin");
+        return HELLO_TEXT + " Имя пользователя в БД под id = 1: " + user.getUsername();
     }
 
     @RequestMapping(path = "/user/{username}/{password}", method = RequestMethod.POST)
@@ -49,7 +50,7 @@ public class BackendController {
         return userRepository.findById(id).map(user -> {
             LOG.info("Reading user with id " + id + " from database.");
             return user;
-        }).orElseThrow(() -> new UserNotFoundException("The user with the id " + id + " couldn't be found in the database."));
+        }).orElseThrow(() -> new UserNotFoundException("Пользователь с id = " + id + " не может быть найден в базе данных."));
     }
 
     @RequestMapping(path="/secured", method = RequestMethod.GET)
