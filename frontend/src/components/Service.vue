@@ -1,6 +1,6 @@
 <template>
   <div class="ping">
-    <button class=”Search__button” @click="callRestService()">CALL Spring Boot REST backend service</button>
+    <button class=”Search__button” @click="callRestService()">Вызов SpringBoot REST</button>
     <h3>{{ backendResponse }}</h3>
   </div>
 </template>

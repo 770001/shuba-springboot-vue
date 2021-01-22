@@ -7,6 +7,20 @@ const AXIOS = axios.create({
 
 export default {
   getPing () {
-    return AXIOS.get('/ping')
+    return AXIOS.get('/hello')
+  },
+  getUser (userId) {
+    return AXIOS.get('/user/' + userId)
+  },
+  createUser (username, password) {
+    return AXIOS.post('/user/' + username + '/' + password)
+  },
+  getSecured (username, password) {
+    return AXIOS.get('/secured/', {
+      auth: {
+        username: username,
+        password: password
+      }
+    })
   }
 }

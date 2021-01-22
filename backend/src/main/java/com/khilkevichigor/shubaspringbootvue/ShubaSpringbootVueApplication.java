@@ -9,5 +9,4 @@ public class ShubaSpringbootVueApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShubaSpringbootVueApplication.class, args);
 	}
-
 }
