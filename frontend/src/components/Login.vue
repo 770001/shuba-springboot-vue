@@ -8,8 +8,12 @@
     <h5>You're not logged in - so you don't see much here. Try to log in:</h5>
 
     <form @submit.prevent="callLogin()">
-      <input type="text" placeholder="username" v-model="user">
-      <input type="password" placeholder="password" v-model="password">
+      <label>
+        <input type="text" placeholder="username" v-model="username">
+      </label>
+      <label>
+        <input type="password" placeholder="password" v-model="password" autocomplete="on">
+      </label>
       <b-btn variant="success" type="submit">Login</b-btn>
       <p v-if="error" class="error">Bad login information</p>
     </form>
@@ -32,12 +36,15 @@ export default {
   },
   methods: {
     callLogin () {
+      console.log('in callLogin()...')
       this.errors = []
-      this.$store.dispatch('login', { user: this.username, password: this.password })
+      this.$store.dispatch('login', { username: this.username, password: this.password })
         .then(() => {
           this.$router.push('/Protected')
+          console.log('after push(\'/Protected\')...')
         })
         .catch(error => {
+          console.log(error)
           this.loginError = true
           this.errors.push(error)
           this.error = true

@@ -12,22 +12,26 @@ export default new Vuex.Store({
     userPass: null
   },
   mutations: {
-    login_success(state, payload) {
+    login_success (state, payload) {
       state.loginSuccess = true
       state.userName = payload.userName
       state.userPass = payload.userPass
     },
-    login_error(state, payload) {
+    login_error (state, payload) {
       state.loginError = true
       state.userName = payload.userName
     }
   },
   actions: {
-    login({commit}, {username, password}) {
+    login ({ commit }, { username, password }) {
+      console.log('in login({ commit }, { username, password })...')
       return new Promise((resolve, reject) => {
+        console.log('in promise...')
         api.getSecured(username, password)
           .then(response => {
+            console.log('in api.getSecured(username, password)...')
             if (response.status === 200) {
+              console.log('is 200...')
               // place the loginSuccess state into our vuex store
               commit('login_success', {
                 userName: username,
@@ -35,18 +39,17 @@ export default new Vuex.Store({
               })
             }
             resolve(response)
+            console.log('after resolve(response)...')
           })
           .catch(error => {
-
-            //todo error должен использоваться
-            if (error) {
-            }
+            console.log(error)
             // place the loginError state into our vuex store
             commit('login_error', {
               userName: username
             })
-            //todo Expected the Promise rejection reason to be an Error  prefer-promise-reject-errors
-            reject('Invalid credentials!')
+            // todo передаю error чтобы избежать Expected the Promise rejection reason to be an Error
+            reject(error, 'Invalid credentials!')
+            console.log('after reject(error, \'Invalid credentials!\')...')
           })
       })
     }

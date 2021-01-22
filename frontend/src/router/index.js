@@ -4,10 +4,10 @@ import Protected from '@/components/Protected'
 import HelloWorld from '@/components/HelloWorld'
 import Service from '@/components/Service'
 import About from '@/components/About'
-import Login from "@/components/Login"
-import Bootstrap from "@/components/Bootstrap"
-import User from "@/components/User"
-import store from "@/store"
+import Login from '@/components/Login'
+import Bootstrap from '@/components/Bootstrap'
+import User from '@/components/User'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -34,6 +34,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('in router.beforeEach()...')
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
@@ -42,10 +43,12 @@ router.beforeEach((to, from, next) => {
         path: '/login'
       })
     } else {
-      next();
+      next()
+      console.log('after next()...')
     }
   } else {
     next() // make sure to always call next()!
+    console.log('after else next()...')
   }
 })
 

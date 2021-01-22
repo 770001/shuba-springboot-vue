@@ -33,9 +33,9 @@ public class BackendController {
         return HELLO_TEXT;
     }
 
-    @RequestMapping(path = "/user/{password}/{username}", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/{username}/{password}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public long addNewUser (@PathVariable("password") String password, @PathVariable("username") String username) {
+    public long addNewUser (@PathVariable("username") String username, @PathVariable("password") String password) {
         User savedUser = userRepository.save(new User(username, password));
 
         LOG.info(savedUser.toString() + " successfully saved into DB");
@@ -65,5 +65,4 @@ public class BackendController {
         LOG.info("URL entered directly into the Browser, so we need to redirect...");
         return "forward:/";
     }
-
 }
