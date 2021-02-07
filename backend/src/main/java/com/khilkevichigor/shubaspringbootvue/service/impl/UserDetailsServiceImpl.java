@@ -1,7 +1,8 @@
-package com.khilkevichigor.shubaspringbootvue.service;
+package com.khilkevichigor.shubaspringbootvue.service.impl;
 
 import com.khilkevichigor.shubaspringbootvue.model.Role;
 import com.khilkevichigor.shubaspringbootvue.model.User;
+import com.khilkevichigor.shubaspringbootvue.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,11 +23,11 @@ import java.util.Set;
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
     @Autowired
-    public UserDetailsServiceImpl(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     //сетим пользователю права на основе ролей
@@ -35,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 
         //получаем юзера по username
-        User user = userServiceImpl.findUserByUsername(username);
+        User user = userService.findUserByUsername(username);
 
         //если юзер не найден
         if (user == null) {

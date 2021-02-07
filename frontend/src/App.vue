@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Hello</router-link> |
-      <router-link to="/callservice">Service</router-link> |
+      <router-link to="/">Home</router-link> |
+      <router-link to="/callservice">Call service</router-link> |
+      <router-link to="/user">Add user</router-link> |
       <router-link to="/bootstrap">Bootstrap</router-link> |
-      <router-link to="/user">User</router-link> |
       <router-link to="/login">Login</router-link> |
       <router-link to="/protected">Protected</router-link> |
+      <router-link to="/admin-panel">Admin panel</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view/>

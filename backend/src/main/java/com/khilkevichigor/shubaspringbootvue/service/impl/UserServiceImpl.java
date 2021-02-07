@@ -1,9 +1,9 @@
-package com.khilkevichigor.shubaspringbootvue.service;
+package com.khilkevichigor.shubaspringbootvue.service.impl;
 
-import com.khilkevichigor.shubaspringbootvue.model.Role;
+import com.khilkevichigor.shubaspringbootvue.exception.UserNotFoundException;
 import com.khilkevichigor.shubaspringbootvue.model.User;
-import com.khilkevichigor.shubaspringbootvue.repository.RoleRepository;
 import com.khilkevichigor.shubaspringbootvue.repository.UserRepository;
+import com.khilkevichigor.shubaspringbootvue.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,11 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    //    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+
+//    @Autowired
+//    private RoleService roleService;
 
     //через конструктор ошибка
     @Autowired
@@ -29,10 +32,10 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
+//    @Autowired
+//    public void setRoleRepository(RoleRepository roleRepository) {
+//        this.roleRepository = roleRepository;
+//    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -44,13 +47,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
+//    public List<Role> getAllRoles() {
+//        return roleRepository.findAll();
+//    }
 
-    public Role getRoleById(Long id) {
-        return roleRepository.getRoleById(id);
-    }
+//    public Role getRoleById(Long id) {
+//        return roleRepository.getRoleById(id);
+//    }
 
     //взять юзера по id
     public User getUserById(Long id) {
@@ -58,7 +61,7 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
-            throw new RuntimeException();
+            throw new UserNotFoundException("Пользователь с id = " + id + " не может быть найден в базе данных.");
         }
     }
 

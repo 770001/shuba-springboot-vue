@@ -9,8 +9,6 @@ import java.util.List;
 @EnableJpaRepositories
 public interface RoleRepository extends JpaRepository<Role, Long> {
     List<Role> findAll();
-
     Role getRoleById(Long id);
-
     Role getRoleByName(String name);
 }

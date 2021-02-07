@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="home">
     <h1>Приветствую на супер проекте! Это будет бомба!!!</h1>
     <h3>{{ msg }}</h3>
 

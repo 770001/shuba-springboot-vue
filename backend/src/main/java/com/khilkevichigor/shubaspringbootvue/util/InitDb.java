@@ -1,9 +1,11 @@
-package com.khilkevichigor.shubaspringbootvue.service;
+package com.khilkevichigor.shubaspringbootvue.util;
 
 import com.khilkevichigor.shubaspringbootvue.model.Role;
 import com.khilkevichigor.shubaspringbootvue.model.User;
 import com.khilkevichigor.shubaspringbootvue.repository.RoleRepository;
 import com.khilkevichigor.shubaspringbootvue.repository.UserRepository;
+import com.khilkevichigor.shubaspringbootvue.service.RoleService;
+import com.khilkevichigor.shubaspringbootvue.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,50 +15,55 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class InitDbService {
+public class InitDb {
 
     @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private RoleRepository roleRepository;
+//    @Autowired
+//    private UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    private RoleService roleService;
+    @Autowired
+    private UserService userService;
 
     /**
      * Init dataBase username: admin, password: admin, roles: ROLE_ADMIN
      */
     @PostConstruct
     public void initDb() {
-        Role role = roleRepository.getRoleByName("ROLE_ADMIN");
+        Role role = roleService.getRoleByName("ROLE_ADMIN");
         if (role == null) {
             role = new Role();
             role.setName("ROLE_ADMIN");
-            roleRepository.save(role);
+            roleService.addRole(role);
         }
-        assert roleRepository.getRoleByName("ROLE_ADMIN") != null;
+        assert roleService.getRoleByName("ROLE_ADMIN") != null;
 
-        role = roleRepository.getRoleByName("ROLE_USER");
+        role = roleService.getRoleByName("ROLE_USER");
         if (role == null) {
             role = new Role();
             role.setName("ROLE_USER");
-            roleRepository.save(role);
+            roleService.addRole(role);
         }
-        assert roleRepository.getRoleByName("ROLE_USER") != null;
+        assert roleService.getRoleByName("ROLE_USER") != null;
 
-        User user = userRepository.findUserByUsername("admin");
+        User user = userService.findUserByUsername("admin");
         if (user == null) {
             user = new User();
             user.setUsername("admin");
             user.setPassword(passwordEncoder.encode("admin"));
             Set<Role> roles = new HashSet<>();
-            Role roleAdmin = roleRepository.getRoleByName("ROLE_ADMIN");
-            Role roleUser = roleRepository.getRoleByName("ROLE_USER");
+            Role roleAdmin = roleService.getRoleByName("ROLE_ADMIN");
+            Role roleUser = roleService.getRoleByName("ROLE_USER");
             roles.add(roleAdmin);
             roles.add(roleUser);
             user.setRoles(roles);
-            userRepository.save(user);
+            userService.addUser(user);
         }
-        User admin = userRepository.findUserByUsername("admin");
+        User admin = userService.findUserByUsername("admin");
         assert admin != null;
         Set<Role> roles = admin.getRoles();
         assert roles.size() == 2;

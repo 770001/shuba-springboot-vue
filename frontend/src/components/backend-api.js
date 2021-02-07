@@ -12,6 +12,9 @@ export default {
   getUser (userId) {
     return AXIOS.get('/user/' + userId)
   },
+  getAllUsers () {
+    return AXIOS.get('/admin/all-users/')
+  },
   createUser (username, password) {
     return AXIOS.post('/user/' + username + '/' + password)
   },
