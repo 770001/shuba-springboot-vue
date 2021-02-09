@@ -20,22 +20,13 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
-    //    private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
-
-//    @Autowired
-//    private RoleService roleService;
 
     //через конструктор ошибка
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-//    @Autowired
-//    public void setRoleRepository(RoleRepository roleRepository) {
-//        this.roleRepository = roleRepository;
-//    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -46,14 +37,6 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
-//    public List<Role> getAllRoles() {
-//        return roleRepository.findAll();
-//    }
-
-//    public Role getRoleById(Long id) {
-//        return roleRepository.getRoleById(id);
-//    }
 
     //взять юзера по id
     public User getUserById(Long id) {

@@ -10,10 +10,6 @@ import java.util.List;
  */
 public interface RoleService {
     List<Role> getAllRoles();
-    Role getRoleById(Long id);
     Role getRoleByName(String name);
-
     Role addRole(Role role);
-//    Role updateRole(User user);
-//    void deleteRole(Long id);
 }

@@ -21,7 +21,9 @@
                 <tr v-for="user in allUsers" :key="user.id">
                   <td>{{ user.id }}</td>
                   <td>{{ user.username }}</td>
-                  <td>{{ user.roles }}</td>
+                  <td>
+                    <div v-for="role in user.roles" :key="role.id"> {{ role.name }}</div>
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -45,7 +47,6 @@ export default {
     }
   },
   methods: {
-    //todo эта функция почему-то не вызывается!!!
     getAllUsers () {
       console.log('in getAllUsers()...')
       api.getAllUsers()
@@ -58,6 +59,9 @@ export default {
           this.errors.push(e)
         })
     }
+  },
+  created () {
+    this.getAllUsers()
   }
 }
 </script>

@@ -25,8 +25,6 @@ public class BackendController {
     public static final String HELLO_TEXT = "Привет из SpringBoot-а!";
     public static final String SECURED_TEXT = "Привет с защищенного ресурса!";
 
-    //    @Autowired
-//    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired

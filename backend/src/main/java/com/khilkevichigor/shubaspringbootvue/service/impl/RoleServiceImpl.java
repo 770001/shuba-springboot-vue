@@ -23,11 +23,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRoleById(Long id) {
-        return roleRepository.getRoleById(id);
-    }
-
-    @Override
     public Role getRoleByName(String name) {
         return roleRepository.getRoleByName(name);
     }
@@ -36,14 +31,4 @@ public class RoleServiceImpl implements RoleService {
     public Role addRole(Role role) {
         return roleRepository.save(role);
     }
-
-//    @Override
-//    public Role updateRole(User user) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void deleteRole(Long id) {
-//
-//    }
 }

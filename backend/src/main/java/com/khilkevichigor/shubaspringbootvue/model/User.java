@@ -26,7 +26,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    //    @ManyToMany
     @ManyToMany(fetch = FetchType.EAGER) //no proxy for Roles when mvn clean+install (front+back)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
