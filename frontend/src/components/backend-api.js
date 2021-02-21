@@ -15,8 +15,11 @@ export default {
   getAllUsers () {
     return AXIOS.get('/admin/all-users/')
   },
-  createUser (username, password) {
-    return AXIOS.post('/user/' + username + '/' + password)
+  getAllRoles () {
+    return AXIOS.get('/role/all-roles/')
+  },
+  createUser (username, password, role) {
+    return AXIOS.post('/user/' + username + '/' + password + '/' + role)
   },
   deleteUserById (id) {
     return AXIOS.delete('/user/' + id)

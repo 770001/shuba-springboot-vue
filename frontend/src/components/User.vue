@@ -7,11 +7,20 @@
     <input type="text" v-model="user.username" placeholder="username">
     <input type="text" v-model="user.password" placeholder="password">
 
+    <label>
+      <select v-model="user.selectedRole">
+        <option v-for="role in allRoles" v-bind:key="role.id">
+          {{ role.name }}
+        </option>
+      </select>
+    </label>
+
     <button @click="createNewUser()">Создать пользователя</button>
 
     <div v-if="showResponse"><h6>Пользователь создан с id: {{ response }}</h6></div>
 
-    <button v-if="showResponse" @click="retrieveUser()">Получить пользователя под id: {{ user.id }} - данные из базы</button>
+    <button v-if="showResponse" @click="retrieveUser()">Получить пользователя под id: {{ user.id }} - данные из базы
+    </button>
 
     <h4 v-if="showRetrievedUser">Полученный пользователь: {{ retrievedUser.username }} {{ retrievedUser.password }}</h4>
 
@@ -31,17 +40,19 @@ export default {
       user: {
         username: '',
         password: '',
+        selectedRole: '',
         id: 0
       },
       showResponse: false,
       retrievedUser: {},
-      showRetrievedUser: false
+      showRetrievedUser: false,
+      allRoles: []
     }
   },
   methods: {
     // Fetches posts when the component is created.
     createNewUser () {
-      api.createUser(this.user.username, this.user.password).then(response => {
+      api.createUser(this.user.username, this.user.password, this.user.selectedRole).then(response => {
         console.log(response.data)
         // JSON responses are automatically parsed.
         this.response = response.data
@@ -50,6 +61,20 @@ export default {
       })
         .catch(e => {
           this.errors.push(e)
+        })
+    },
+    getAllRoles () {
+      console.log('in getAllRoles...')
+      api.getAllRoles()
+        .then(response => {
+          // JSON responses are automatically parsed.
+          console.log('in api.getAllRoles...')
+          this.allRoles = response.data
+          console.log(this.allRoles)
+        })
+        .catch(e => {
+          this.errors.push(e)
+          console.log(this.errors)
         })
     },
     retrieveUser () {
@@ -62,6 +87,9 @@ export default {
           this.errors.push(e)
         })
     }
+  },
+  created () {
+    this.getAllRoles()
   }
 }
 
