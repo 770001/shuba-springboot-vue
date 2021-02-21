@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,13 @@ public class BackendController {
         User userById = userService.getUserById(id);
         LOG.info("Reading user with id " + id + " from database.");
         return userById;
+    }
+
+    @DeleteMapping (path = "/user/{id}")
+    public Long deleteUserById(@PathVariable("id") long id) {
+        userService.deleteUser(id);
+        LOG.info("Delete user with id " + id + " from database.");
+        return id;
     }
 
     @RequestMapping(path = "/secured", method = RequestMethod.GET)

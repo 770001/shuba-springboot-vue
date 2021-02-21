@@ -22,7 +22,15 @@
                   <td>{{ user.id }}</td>
                   <td>{{ user.username }}</td>
                   <td>
-                    <div v-for="role in user.roles" :key="role.id"> {{ role.name }}</div>
+                    <div v-for="role in user.roles" :key="role.id">
+                      {{ role.name }}
+                    </div>
+                  </td>
+                  <td>
+                    <button class=”Search__button” @click="updateUserById(user.id)">Изменить</button>
+                  </td>
+                  <td>
+                    <button class=”Search__button” @click="deleteUserById(user.id)">Удалить</button>
                   </td>
                 </tr>
                 </tbody>
@@ -58,6 +66,23 @@ export default {
         .catch(e => {
           this.errors.push(e)
         })
+    },
+    deleteUserById (id) {
+      console.log('in deleteUserById()...')
+      api.deleteUserById(id)
+        .then(response => {
+          console.log(response)
+          const index = this.allUsers.findIndex(user => user.id === id)
+          console.log('find the user index')
+          if (~index) {
+            console.log('if the user exists in array')
+            this.allUsers.splice(index, 1)
+            console.log('delete the user')
+          }
+        })
+    },
+    updateUserById (id) {
+      console.log('in updateUserById()...')
     }
   },
   created () {

@@ -18,6 +18,9 @@ export default {
   createUser (username, password) {
     return AXIOS.post('/user/' + username + '/' + password)
   },
+  deleteUserById (id) {
+    return AXIOS.delete('/user/' + id)
+  },
   getSecured (username, password) {
     return AXIOS.get('/secured/', {
       auth: {
