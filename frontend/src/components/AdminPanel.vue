@@ -27,9 +27,7 @@
                     </div>
                   </td>
                   <td>
-
-                    <button type="button" class="btn btn-primary" @click="openModal(user.id)">Изменить</button>
-
+                    <b-button size="sm" v-b-modal="'editUserModal'" @click="editUser(user)">Изменить</b-button>
                   </td>
                   <td>
                     <button class=”Search__button” @click="deleteUserById(user.id)">Удалить</button>
@@ -42,40 +40,14 @@
         </div>
       </div>
     </div>
-
     <!--modal-->
-    <div v-if="modalIsVisible">
-      <transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Изменить {{ user.username }}</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" @click="closeModal()">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p>Здесь поля юзера:</p>
-                  {{ updateUser.id }}
-                  {{ updateUser.username }}
-                  {{ updateUser.password }}
-                  {{ updateUser.role }}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" @click="closeModal()">Закрыть</button>
-                  <button type="button" class="btn btn-primary">Сохранить</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
-    </div>
-
+    <b-modal id="editUserModal">
+      id {{updateUser.id}}
+      username {{updateUser.username}}
+      password {{updateUser.password}}
+      role {{updateUser.role}}
+    </b-modal>
   </div>
-
 </template>
 
 <script>
@@ -92,17 +64,17 @@ export default {
         username: '',
         password: '',
         role: '',
-        id: 0
+        id: ''
       }
     }
   },
   methods: {
     getAllUsers() {
-      console.log('in getAllUsers()...')
+      console.log('in getAllUsers()')
       api.getAllUsers()
         .then(response => {
           // JSON responses are automatically parsed.
-          console.log('in api.getAllUsers()...')
+          console.log('in api.getAllUsers()')
           this.allUsers = response.data
         })
         .catch(e => {
@@ -110,7 +82,7 @@ export default {
         })
     },
     deleteUserById(id) {
-      console.log('in deleteUserById()...')
+      console.log('in deleteUserById()')
       api.deleteUserById(id)
         .then(response => {
           console.log(response)
@@ -123,26 +95,14 @@ export default {
           }
         })
     },
-    openModal(id) {
-      console.log('in openModal()...')
-      this.modalIsVisible = true
-      console.log(this.modalIsVisible)
-      api.getUser(id).then(response => {
-        console.log(response.data)
-        this.updateUser.id = response.data.id
-        console.log(this.updateUser.id)
-        this.updateUser.username = response.data.username
-        console.log(this.updateUser.username)
-        this.updateUser.password = response.data.password
-        console.log(this.updateUser.password)
-        this.updateUser.role = response.data.roles[0].name
-        console.log(this.updateUser.role)
-      })
-    },
-    closeModal() {
-      console.log('in closeModal()...')
-      this.modalIsVisible = false
-      console.log(this.modalIsVisible)
+    editUser(user) {
+      console.log('in editUser')
+      console.log(user)
+      this.updateUser.id = user.id
+      this.updateUser.username = user.username
+      this.updateUser.password = user.password
+      this.updateUser.role = user.roles[0].name
+      console.log(this.updateUser)
     }
   },
   created() {
