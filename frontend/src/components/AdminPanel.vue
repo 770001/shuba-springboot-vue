@@ -1,6 +1,6 @@
 <template>
-  <!--таблица всех юзеров-->
-  <div class="all-users">
+  <!--list users-->
+  <div class="all-users" id="el">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -27,7 +27,9 @@
                     </div>
                   </td>
                   <td>
-                    <button class=”Search__button” @click="updateUserById(user.id)">Изменить</button>
+
+                    <button type="button" class="btn btn-primary" @click="openModal(user.id)">Изменить</button>
+
                   </td>
                   <td>
                     <button class=”Search__button” @click="deleteUserById(user.id)">Удалить</button>
@@ -40,7 +42,40 @@
         </div>
       </div>
     </div>
+
+    <!--modal-->
+    <div v-if="modalIsVisible">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Изменить {{ user.username }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" @click="closeModal()">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Здесь поля юзера:</p>
+                  {{ updateUser.id }}
+                  {{ updateUser.username }}
+                  {{ updateUser.password }}
+                  {{ updateUser.role }}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" @click="closeModal()">Закрыть</button>
+                  <button type="button" class="btn btn-primary">Сохранить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -48,14 +83,21 @@ import api from './backend-api'
 
 export default {
   name: 'AdminPanel',
-  data () {
+  data() {
     return {
       allUsers: [],
-      errors: []
+      errors: [],
+      modalIsVisible: false,
+      updateUser: {
+        username: '',
+        password: '',
+        role: '',
+        id: 0
+      }
     }
   },
   methods: {
-    getAllUsers () {
+    getAllUsers() {
       console.log('in getAllUsers()...')
       api.getAllUsers()
         .then(response => {
@@ -67,7 +109,7 @@ export default {
           this.errors.push(e)
         })
     },
-    deleteUserById (id) {
+    deleteUserById(id) {
       console.log('in deleteUserById()...')
       api.deleteUserById(id)
         .then(response => {
@@ -81,12 +123,30 @@ export default {
           }
         })
     },
-    //todo 22.02.2021 ОСТАНОВИЛСЯ ЗДЕСЬ!!!
-    updateUserById (id) {
-      console.log('in updateUserById()...')
+    openModal(id) {
+      console.log('in openModal()...')
+      this.modalIsVisible = true
+      console.log(this.modalIsVisible)
+      api.getUser(id).then(response => {
+        console.log(response.data)
+        this.updateUser.id = response.data.id
+        console.log(this.updateUser.id)
+        this.updateUser.username = response.data.username
+        console.log(this.updateUser.username)
+        this.updateUser.password = response.data.password
+        console.log(this.updateUser.password)
+        this.updateUser.role = response.data.roles[0].name
+        console.log(this.updateUser.role)
+      })
+    },
+    closeModal() {
+      console.log('in closeModal()...')
+      this.modalIsVisible = false
+      console.log(this.modalIsVisible)
     }
   },
-  created () {
+  created() {
+    console.log('in created()...')
     this.getAllUsers()
   }
 }
